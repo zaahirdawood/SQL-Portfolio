@@ -1,4 +1,4 @@
--- Translating business questionsn to SQL Syntax
+-- Translating business questionsn to SQL Syntax - (Data Lemur Questions)
 
 --1. Count the user activation Rate
 -- Postgres 14 Syntax 
