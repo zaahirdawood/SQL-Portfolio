@@ -11,12 +11,13 @@ WITH CTE AS (
     LEFT JOIN texts as t
         ON e.email_id = t.email_id
             )
-    SELECT ROUND((count_confirmed / SUM(count_confirmed + count_not_confirmed)),2) AS confirm_rate
-      FROM CTE
-    GROUP BY count_confirmed,count_not_confirmed
+SELECT ROUND((count_confirmed / SUM(count_confirmed + count_not_confirmed)),2) AS confirm_rate
+FROM CTE
+GROUP BY count_confirmed,count_not_confirmed
 
 --2. How well do credit cards typically do first month of launch (question derived by a companies need to launch a new credit card)
     -- we are analysing the number of requested credit cards upon first month the cards were launched.
+
 WITH CTE AS (
       SELECT 
       card_name, 
