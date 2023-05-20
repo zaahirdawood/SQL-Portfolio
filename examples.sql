@@ -74,7 +74,7 @@ WITH count_monthly_change AS (
         EXTRACT(YEAR FROM call_received) AS yr,
         EXTRACT(MONTH FROM call_received) AS mth,
         COUNT(case_id) AS curr_mth_call,
-        LAG(COUNT(case_id)) OVER(ORDER BY EXTRACT(MONTH FROM call_received)) as previous_month_count
+        LAG(COUNT(case_id)) OVER(ORDER BY EXTRACT(MONTH FROM call_received)) as previous_month_count --window function 
       FROM callers
       WHERE call_duration_secs > 300
       GROUP BY yr, mth
@@ -86,3 +86,22 @@ WITH count_monthly_change AS (
   FROM count_monthly_change
   ORDER BY yr, mth ASC
 
+
+-- 6. count distinct monthly users in that were active in june that are active in july 
+-- business questions finding the number of active users that were active in the previous month
+-- SQL Techniques: Correlated Sub-queries
+
+
+SELECT 
+  EXTRACT(MONTH FROM event_date) AS mth,
+  COUNT(DISTINCT user_id) AS monthly_active_users
+FROM user_actions AS curr_month
+WHERE EXISTS (
+   SELECT last_month.user_id
+   FROM user_actions AS last_month
+   WHERE last_month.user_id = curr_month.user_id -- self join query that links 
+   AND EXTRACT(MONTH FROM last_month.event_date) =  EXTRACT(MONTH FROM curr_month.event_date - interval '1 month') -- correlated subquery to extract the previous month
+            )
+AND EXTRACT(MONTH FROM event_date) = 7
+AND EXTRACT(YEAR FROM event_date) = 2022
+GROUP BY mth
