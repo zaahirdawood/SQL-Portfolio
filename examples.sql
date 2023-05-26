@@ -105,3 +105,30 @@ WHERE EXISTS (
 AND EXTRACT(MONTH FROM event_date) = 7
 AND EXTRACT(YEAR FROM event_date) = 2022
 GROUP BY mth
+
+
+-- 7. using a cross join to link pizza toppings (many-to-many) combinations in a table
+-- the goal is to find the highest grossing pizza combination 
+with cte as (
+      SELECT  
+      p1.topping_name first_top, 
+      p2.topping_name second_top,
+      p3.topping_name third_top,
+      p1.ingredient_cost first_cost, 
+      p2.ingredient_cost second_cost,
+      p3.ingredient_cost third_cost
+      FROM 
+      pizza_toppings AS p1 
+      CROSS JOIN -- using cross join to horizontal join the table to itself
+        pizza_toppings AS p2,
+        pizza_toppings as p3
+      WHERE p1.topping_name < p2.topping_name -- "break ties by listing the ingredients in alphabetical order"
+        AND p2.topping_name < p3.topping_name
+)
+
+SELECT
+      concat(first_top,',' ,second_top,',', third_top) as pizza,
+      (first_cost + second_cost + third_cost) as total_cost
+  from cte
+  order by total_cost desc,  pizza asc
+
