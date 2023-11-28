@@ -7,3 +7,15 @@
 ### 5.
 ### 6.
 ### 7. Using website search to personalise platform content
+
+
+
+<h2> Wallmart 2</h2>
+
+This folder contains all my business questions answered for the wallmart use-case 
+
+```
+select * from table 1
+```
+![visuaisation1]()
+
