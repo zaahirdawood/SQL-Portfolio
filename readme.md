@@ -12,7 +12,15 @@
 
 <h2> Wallmart 2</h2>
 
-This folder contains all my business questions answered for the wallmart use-case 
+| student_id | engaged_with_partner_profiles | engaged_with_partner_shortlists | engaged_with_partner_events |
+|------------|-------------------------------|---------------------------------|-----------------------------|
+| student1   | 2                             | 1                               | 1                           |
+| student2   | 0                             | 1                               | 1                           |
+| student3   | 1                             | 0                               | 1                           |
+| ...        | ...                           | ...                             | ...                         |
+
+
+This folder contains all my business questions answered for the walmart use-case 
 
 ```
 select * from table 1
